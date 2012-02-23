@@ -51,7 +51,7 @@ int init_nusensors(hw_module_t const* module, hw_device_t** device);
 
 /*****************************************************************************/
 
-#define AKM_DEVICE_NAME     "/dev/akm8973_aot"
+#define AKM_DEVICE_NAME     "/dev/akm8962_aot"
 #define TAOS_DEVICE_NAME      "/dev/taos"
 
 #define EVENT_TYPE_ACCEL_X          ABS_Y
