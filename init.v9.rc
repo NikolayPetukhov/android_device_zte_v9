@@ -155,7 +155,7 @@ service abtfilt /system/bin/abtfilt -c -d -z -n
     disabled
     oneshot
 
-service akmd /system/bin/akmd2
+service akmd /system/bin/akmd8962
     oneshot
 
 #on property:persist.sys.charging.disable=1
