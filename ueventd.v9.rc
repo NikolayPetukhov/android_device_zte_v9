@@ -6,4 +6,6 @@
 /dev/kgsl-3d0               0666   root       root
 /dev/taos               0777   root       root
 /dev/si4708               0777   root       root
+/dev/akm8962_daemon       0640   compass    system
+/dev/akm8962_aot          0640   compass    system
 /dev/msm_preproc_ctl      0660   system audio

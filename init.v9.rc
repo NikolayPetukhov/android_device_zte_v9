@@ -88,6 +88,17 @@ on boot
     write /sys/devices/platform/mass_storage/lun0/file /dev/block/mmcblk0p1
     write /sys/bus/platform/drivers/msm_sdcc/msm_sdcc.1/polling 1
 
+#fixme
+    symlink /dev/akm8962_aot /dev/akm8973_aot
+    symlink /dev/akm8962_dev /dev/akm8973_dev
+
+#wifi
+    setprop wifi.interface wlan0
+    setprop wifi.chip.type BCM_4319
+    setprop bt.chip.type BCM_2070
+    setprop ro.tether.denied false
+
+
 service qmuxd /system/bin/qmuxd 
 
 on property:init.svc.bluetoothd=running
@@ -103,11 +114,23 @@ service hci_qcomm_init /system/bin/log -t qcom-bluetooth -p i "hci_qcomm_init se
     disabled
     oneshot
 
-service hciattach /system/bin/sh /system/etc/init.bt.sh
+service hciattach /system/bin/hciattach -n -s 115200 /dev/ttyHS0 bcm2035
     user bluetooth
     group qcom_oncrpc bluetooth net_bt_admin system
     disabled
     oneshot
+
+service btld /system/bin/btld -lpm 1
+    user root
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+on property:service.brcm.bt.fm.active=1
+    start btld
+
+on property:service.brcm.bt.srv_active=0
+    stop btld
 
 # WPA SETTINGS
 service wpa_supplicant /system/bin/wpa_supplicant -Dawext -iwlan0 -W -c/data/misc/wifi/wpa_supplicant.conf
