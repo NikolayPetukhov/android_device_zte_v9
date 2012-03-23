@@ -41,11 +41,6 @@
 #define DUALMIC_KEY "dualmic_enabled"
 #define TTY_MODE_KEY "tty_mode"
 
-#ifdef HAVE_FM_RADIO
-#define Si4708_IOC_MAGIC  'k'
-#define Si4708_IOC_SET_VOL                    _IOW(Si4708_IOC_MAGIC, 8,int)
-#endif
-
 namespace android {
 static int audpre_index, tx_iir_index;
 static void * acoustic;
@@ -1155,17 +1150,9 @@ status_t AudioHardware::setFmOnOff(int onoff)
     int ret;
 
     if (onoff) {
-        if (fmfd < 0)
-            fmfd = open("/dev/si4708", O_RDWR);
         mFmRadioEnabled = true;
 	LOGV("mFmVolume=%i",mFmVolume);
-	if (ioctl(fmfd, Si4708_IOC_SET_VOL, &mFmVolume) < 0) {
-	    LOGE("set_volume_fm error.");
-            return -EIO;
-        }
     } else {
-        close(fmfd);
-        fmfd = -1;
         mFmRadioEnabled = false;
     }
     LOGV("mFmRadioEnabled=%d", mFmRadioEnabled);
@@ -2167,13 +2154,20 @@ status_t AudioHardware::AudioStreamInMSM72xx::setParameters(const String8& keyVa
 
 status_t AudioHardware::setFmVolume(float v)
 {
-    mFmVolume = (AudioSystem::logToLinear(v) +5) / 7;
-    if(mFmRadioEnabled) {
-	if (ioctl(fmfd, Si4708_IOC_SET_VOL, &mFmVolume) < 0) {
-	    LOGE("set_volume_fm error.");
-            return -EIO;
-        }
-    }
+    float ratio = 2.5;
+    int volume = (unsigned int)(AudioSystem::logToLinear(v) * ratio);
+    char volhex[10] = "";
+    sprintf(volhex, "0x%x ", volume);
+    char volreg[100] = "hcitool cmd 0x3f 0xa 0x5 0xe0 0x41 0xf 0 ";
+
+    strcat(volreg, volhex);
+
+    strcat(volreg, "0 0 0");
+
+    system("hcitool cmd 0x3f 0xa 0x5 0xc0 0x41 0xf 0 0x20 0 0 0");
+    system("hcitool cmd 0x3f 0xa 0x5 0xe4 0x41 0xf 0 0x00 0 0 0");
+    system(volreg);
+
     return NO_ERROR;
 }
 #endif
