@@ -23,8 +23,12 @@ adb pull /system/bin/qmuxd ../../../vendor/zte/$DEVICE/proprietary/qmuxd
 chmod 755 ../../../vendor/zte/$DEVICE/proprietary/qmuxd
 adb pull /system/bin/akmd2 ../../../vendor/zte/$DEVICE/proprietary/akmd2
 chmod 755 ../../../vendor/zte/$DEVICE/proprietary/akmd2
+adb pull /system/bin/akmd8962 ../../../vendor/zte/$DEVICE/proprietary/akmd8962
+chmod 755 ../../../vendor/zte/$DEVICE/proprietary/akmd8962
 adb pull /system/bin/hci_qcomm_init ../../../vendor/zte/$DEVICE/proprietary/hci_qcomm_init
 chmod 755 ../../../vendor/zte/$DEVICE/proprietary/hci_qcomm_init
+adb pull /system/bin/hciattach ../../../vendor/zte/$DEVICE/proprietary/hciattach
+chmod 755 ../../../vendor/zte/$DEVICE/proprietary/hciattach
 
 # bluetooth
 adb pull /system/etc/init.qcom.bt.sh ../../../vendor/zte/$DEVICE/proprietary/init.qcom.bt.sh
@@ -131,6 +135,7 @@ PRODUCT_COPY_FILES += \\
     vendor/zte/__DEVICE__/proprietary/yamato_pm4.fw:system/etc/firmware/yamato_pm4.fw \\
     vendor/zte/__DEVICE__/proprietary/qmuxd:system/bin/qmuxd \\
     vendor/zte/__DEVICE__/proprietary/akmd2:system/bin/akmd2 \\
+    vendor/zte/__DEVICE__/proprietary/akmd8962:system/bin/akmd8962 \\
     vendor/zte/__DEVICE__/proprietary/libril-qc-1.so:system/lib/libril-qc-1.so \\
     vendor/zte/__DEVICE__/proprietary/libril-qcril-hook-oem.so:system/lib/libril-qcril-hook-oem.so \\
     vendor/zte/__DEVICE__/proprietary/libdiag.so:system/lib/libdiag.so \\
@@ -162,6 +167,7 @@ PRODUCT_COPY_FILES += \\
     vendor/zte/__DEVICE__/proprietary/libloc-rpc.so:system/lib/libloc-rpc.so \\
     vendor/zte/__DEVICE__/proprietary/libcommondefs.so:system/lib/libcommondefs.so \\
     vendor/zte/__DEVICE__/proprietary/hci_qcomm_init:system/bin/hci_qcomm_init \\
+    vendor/zte/__DEVICE__/proprietary/hciattach:system/bin/hciattach \\
     vendor/zte/__DEVICE__/proprietary/libOmxEvrcEnc.so:/system/lib/libOmxEvrcEnc.so \\
     vendor/zte/__DEVICE__/proprietary/libOmxAacDec.so:/system/lib/libOmxAacDec.so \\
     vendor/zte/__DEVICE__/proprietary/libOmxWmvDec.so:/system/lib/libOmxWmvDec.so \\
