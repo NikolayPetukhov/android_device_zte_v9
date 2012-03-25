@@ -47,13 +47,14 @@ BOARD_HAVE_FM_RADIO := true
 BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
 BOARD_USE_BROADCOM_FM_VOLUME_HACK := true
 
+#WPA_SUPPLICANT_VERSION := VER_0_6_X
+BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 BOARD_WLAN_DEVICE := bcm4329
 WIFI_DRIVER_MODULE_NAME     := "dhd"
 WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/dhd.ko"
-WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/firmware/fw_bcm4329.bin nvram_path=/system/etc/wifi/nv_4329.txt iface_name=wlan0"
-WIFI_DRIVER_FW_STA_PATH := "/system/etc/firmware/fw_bcm4329_apsta.bin"
-#WIFI_FIRMWARE_LOADER        := wifi-loader
-BOARD_WPA_SUPPLICANT_DRIVER := AWEXT
+WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/fw_bcm4329.bin nvram_path=/system/etc/nv_4329.txt iface_name=wlan0"
+WIFI_DRIVER_FW_STA_PATH := "/system/etc/fw_bcm4329.bin"
+WIFI_DRIVER_FW_AP_PATH := "/system/etc/fw_bcm4329_apsta.bin"
 
 WITH_JIT := true
 ENABLE_JSC_JIT := true

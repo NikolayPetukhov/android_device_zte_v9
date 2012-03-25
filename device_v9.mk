@@ -98,15 +98,17 @@ PRODUCT_COPY_FILES += \
 
 #Kernel Modules
 PRODUCT_COPY_FILES += \
-    device/zte/v9/prebuilt/ar6000.ko:system/wifi/ar6000.ko \
-    device/zte/v9/prebuilt/tun.ko:system/lib/modules/2.6.32.9-perf/tun.ko
+    device/zte/v9/prebuilt/dhd.ko:system/lib/modules/dhd.ko
+
+#Bluetooth firmware
+PRODUCT_COPY_FILES += \
+    device/zte/v9/firmware/BCM4329B1_002.002.023.0735.0754.hcd:system/etc/BCM4329B1_002.002.023.0735.0754.hcd
 
 #WiFi firmware
 PRODUCT_COPY_FILES += \
-    device/zte/v9/firmware/regcode:system/wifi/regcode \
-    device/zte/v9/firmware/data.patch.hw2_0.bin:system/wifi/data.patch.hw2_0.bin \
-    device/zte/v9/firmware/athwlan.bin.z77:system/wifi/athwlan.bin.z77 \
-    device/zte/v9/firmware/athtcmd_ram.bin:system/wifi/athtcmd_ram.bin
+    device/zte/v9/firmware/fw_4329_apsta.bin:system/etc/fw_4329_apsta.bin \
+    device/zte/v9/firmware/fw_4329.bin:system/etc/fw_4329.bin \
+    device/zte/v9/firmware/nv_4329.txt:system/etc/nv_4329.txt
 
 #Media profile
 PRODUCT_COPY_FILES += \
