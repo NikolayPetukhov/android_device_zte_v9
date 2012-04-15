@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ifeq ($(TARGET_DEVICE),v9)
-    include $(call all-named-subdir-makefiles, recovery libaudio libril libcamera libgralloc libcopybit libsensors V9Parts liblights)
+ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),v9)
+ifdef $(AOKP)
+include $(call all-makefiles-under,device/zte/common)
+endif
+include $(call all-makefiles-under,device/zte/v9)
 endif

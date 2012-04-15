@@ -22,3 +22,5 @@
 
 add_lunch_combo zte_v9-eng
 add_lunch_combo zte_v9-userdebug
+add_lunch_combo cm_v9-eng
+add_lunch_combo cm_v9-userdebug

@@ -12,111 +12,59 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#
-# This file is the build configuration for a full Android
-# build for sapphire hardware. This cleanly combines a set of
-# device-specific aspects (drivers) with a device-agnostic
-# product configuration (apps).
-#
+# Proprietary and common side of the device
+$(call inherit-product, vendor/zte/v9/v9-vendor.mk)
+$(call inherit-product, device/zte/common/device_zte.mk)
 
 # Inherit from those products. Most specific first.
-$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
+# Set those variables here to overwrite the inherited values.
+PRODUCT_NAME := zte_v9
+PRODUCT_DEVICE := v9
+PRODUCT_BRAND := ZTE
+PRODUCT_MODEL := ZTE V9
 
 $(call inherit-product, device/common/gps/gps_eu_supl.mk)
 
-DEVICE_PACKAGE_OVERLAYS := device/zte/v9/overlay
+PRODUCT_AAPT_PREF_CONFIG := hdpi
+PRODUCT_AAPT_CONFIG := normal hdpi
 
-# Discard inherited values and use our own instead.
-PRODUCT_NAME := zte_v9
-PRODUCT_DEVICE := v9
-PRODUCT_MODEL := ZTE V9
-
+# Libs
 PRODUCT_PACKAGES += \
-    LiveWallpapers \
-    LiveWallpapersPicker \
-    VisualizationWallpapers \
-    MagicSmokeWallpapers \
-    VisualizationWallpapers \
-    librs_jni \
-    Gallery3d \
-    SpareParts \
-    Development \
-    Term \
-    gralloc.v9 \
-    copybit.v9 \
-    gps.v9 \
-    lights.v9 \
     sensors.v9 \
-    libOmxCore \
-    libOmxVidEnc \
-    FM \
-    V9Parts \
-    abtfilt \
-    dexpreopt
-
-# proprietary side of the device
-$(call inherit-product-if-exists, vendor/zte/v9/v9-vendor.mk)
-
-DISABLE_DEXPREOPT := false
-
-PRODUCT_COPY_FILES += \
-    device/zte/v9/qwerty.kl:system/usr/keylayout/qwerty.kl \
-    device/zte/v9/v9-keypad.kl:system/usr/keylayout/v9-keypad.kl
-
-# fstab
-PRODUCT_COPY_FILES += \
-    device/zte/v9/vold.fstab:system/etc/vold.fstab
-
-# Init
-PRODUCT_COPY_FILES += \
-    device/zte/v9/init.v9.rc:root/init.v9.rc \
-    device/zte/v9/ueventd.v9.rc:root/ueventd.v9.rc
-
-# Audio
-PRODUCT_COPY_FILES += \
-    device/zte/v9/AudioFilter.csv:system/etc/AudioFilter.csv \
-    device/zte/v9/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt
-
-# WLAN + BT
-PRODUCT_COPY_FILES += \
-    device/zte/v9/init.bt.sh:system/etc/init.bt.sh \
-    device/zte/v9/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-    device/zte/v9/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
-    device/zte/v9/prebuilt/hostapd:system/bin/hostapd \
-    device/zte/v9/prebuilt/hostapd.conf:system/etc/wifi/hostapd.conf
+    audio.primary.v9 \
+    audio_policy.v9 \
+    camera.v9 \
+    lights.v9
 
 # Install the features available on this device.
 PRODUCT_COPY_FILES += \
-    frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
-    frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
-    frameworks/base/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
-    frameworks/base/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
-    frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
-    frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
-    frameworks/base/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml
+    frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
+    frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
-#Kernel Modules
+# Init
 PRODUCT_COPY_FILES += \
-    device/zte/v9/prebuilt/dhd.ko:system/lib/modules/dhd.ko
+    device/zte/v9/prebuilt/init.v9.rc:root/init.v9.rc \
+    device/zte/v9/prebuilt/init.v9.usb.rc:root/init.v9.usb.rc \
+    device/zte/v9/prebuilt/ueventd.v9.rc:root/ueventd.v9.rc \
+    device/zte/v9/prebuilt/usbconfig:root/sbin/usbconfig
 
-#Bluetooth firmware
+# Keypad files
 PRODUCT_COPY_FILES += \
-    device/zte/v9/firmware/BCM4329B1_002.002.023.0735.0754.hcd:system/etc/BCM4329B1_002.002.023.0735.0754.hcd
+    device/zte/v9/prebuilt/usr/keylayout/v9-keypad.kl:system/usr/keylayout/v9-keypad.kl \
+    device/zte/v9/prebuilt/usr/keylayout/7k_handset.kl:system/usr/keylayout/7k_handset.kl \
+    device/zte/v9/prebuilt/usr/keylayout/Generic.kl:system/usr/keylayout/Generic.kl
 
-#WiFi firmware
+# WiFi
 PRODUCT_COPY_FILES += \
-    device/zte/v9/firmware/fw_4329_apsta.bin:system/etc/fw_4329_apsta.bin \
-    device/zte/v9/firmware/fw_4329.bin:system/etc/fw_4329.bin \
-    device/zte/v9/firmware/nv_4329.txt:system/etc/nv_4329.txt
+    device/zte/v9/prebuilt/lib/modules/dhd.ko:system/lib/modules/dhd.ko \
+    device/zte/v9/prebuilt/etc/fw_4329.bin:system/etc/fw_4329.bin \
+    device/zte/v9/prebuilt/etc/fw_4329_apsta.bin:system/etc/fw_4329_apsta.bin \
+    device/zte/v9/prebuilt/etc/nv_4329.txt:system/etc/nv_4329.txt
 
-#Media profile
+# touchscreen
 PRODUCT_COPY_FILES += \
-    device/zte/v9/media_profiles.xml:system/etc/media_profiles.xml
-
-# V9 uses medium-density artwork where available
-PRODUCT_LOCALES += mdpi
-
-# we have enough storage space to hold precise GC data
-PRODUCT_TAGS += dalvik.gc.type-precise
+    device/zte/v9/prebuilt/usr/idc/msm-touchscreen.idc:system/usr/idc/msm-touchscreen.idc \
+    device/zte/v9/prebuilt/usr/idc/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc
 

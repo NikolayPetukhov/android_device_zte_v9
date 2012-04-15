@@ -12,20 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_PATH := device/zte/v9/
+LOCAL_PATH := $(call my-dir)
 
 #
-# Boot files
+# Kernel
 #
-#ifeq ($(TARGET_PREBUILT_KERNEL),)
-TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/kernel
-#endif
 
-file := $(INSTALLED_KERNEL_TARGET)
-ALL_PREBUILT += $(file)
-$(file): $(TARGET_PREBUILT_KERNEL) | $(ACP)
+TARGET_PREBUILT_KERNEL := device/zte/v9/prebuilt/kernel
+
+ALL_PREBUILT += $(INSTALLED_KERNEL_TARGET)
+$(INSTALLED_KERNEL_TARGET): $(TARGET_PREBUILT_KERNEL) | $(ACP)
 	$(transform-prebuilt-to-target)
-
-
-
-
